@@ -8,4 +8,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
+        fields = ('title', 'date_posted', 'author', 'like')
+
+
+class PostDetailSerializer(serializers.ModelSerializer):
+    """Full post with content"""
+
+    class Meta:
+        model = Post
         fields = '__all__'

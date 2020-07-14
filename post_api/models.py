@@ -16,6 +16,9 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.IntegerField(blank=True, default=0)
 
+    class Meta:
+        ordering = ['-date_posted']
+
     def __str__(self):
         return self.title
 
