@@ -4,7 +4,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('rest_framework.urls', namespace='api'))
+    path('api/', include('rest_framework.urls')),
+    path('api/post/', include('post_api.urls')),
 ]
 
 if settings.DEBUG:
