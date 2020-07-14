@@ -2,10 +2,10 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, get_object_or_404
 
 from .models import Post
-from .serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer
+from .serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer
 
 
 class PostView(ListAPIView):
@@ -42,3 +42,20 @@ class PostCreateView(APIView):
         else:
             return Response(status=404)
 
+
+class PostUpdateView(APIView):
+    """Update single post for authenticated users"""
+    authentication_classes = (BasicAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def put(self, request, slug):
+        saved_post = get_object_or_404(Post.objects.all(), slug=slug)
+        updated_post_data = request.data
+        serializer = PostUpdateSerializer(instance=saved_post, data=updated_post_data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            post_saved = serializer.save()
+            return Response({
+                "success": f"Article '{post_saved}' updated successfully"
+            })
+        else:
+            return Response(status=404)

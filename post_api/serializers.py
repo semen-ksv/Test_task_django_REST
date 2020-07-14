@@ -29,6 +29,14 @@ class PostCreateSerializer(serializers.ModelSerializer):
         fields = ('title', 'content', 'author')
 
 
+class PostUpdateSerializer(serializers.ModelSerializer):
+    """Create post"""
+
+    class Meta:
+        model = Post
+        fields = ('title', 'content')
+
+
 
 {
 "title": "Third post from API",
