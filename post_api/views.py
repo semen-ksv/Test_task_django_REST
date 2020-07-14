@@ -1,5 +1,5 @@
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, get_object_or_404
@@ -11,12 +11,15 @@ from .serializers import PostSerializer, PostDetailSerializer, PostCreateSeriali
 class PostView(ListAPIView):
     """Output list of posts"""
 
+    permission_classes = (AllowAny,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
 class PostDetailView(APIView):
-    """Output details of single post"""
+    """Output details of single post for all users"""
+
+    permission_classes = (AllowAny,)
 
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
@@ -30,6 +33,7 @@ class PostCreateView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        # Create a new post
         data = request.data
         data.update({'author': str(request.user.id)})
         post = PostCreateSerializer(data=data)
@@ -44,7 +48,7 @@ class PostCreateView(APIView):
 class PostUpdateView(APIView):
     """Update single post for authenticated users"""
     authentication_classes = (BasicAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
 
     def put(self, request, slug):
         # Get post with this slug
@@ -61,10 +65,10 @@ class PostUpdateView(APIView):
 
 
 class PostDeleteView(APIView):
-    """Deleting single post for authenticated users"""
+    """Deleting single post for admin users """
 
     authentication_classes = (BasicAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdminUser,)
 
     def delete(self, request, slug):
         # Get post with this slug

@@ -40,8 +40,8 @@ class PostUpdateSerializer(serializers.ModelSerializer):
 
 
 
-{
-"title": "Third post from API",
-"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, quam sed viverra hendrerit, massa urna varius est, rutrum tempor ante justo et neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus nec sagittis justo, vel tincidunt sem. Etiam tincidunt bibendum molestie.",
-"author": "1"
-}
+# {
+# "title": "Third post from API",
+# "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, quam sed viverra hendrerit, massa urna varius est, rutrum tempor ante justo et neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus nec sagittis justo, vel tincidunt sem. Etiam tincidunt bibendum molestie.",
+# "author": "1"
+# }
