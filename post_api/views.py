@@ -29,15 +29,13 @@ class PostCreateView(APIView):
     authentication_classes = (BasicAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request):    #TODO:change saving for author
-        post = PostCreateSerializer(data=request.data)
-        print(post)
-        print(post.is_valid(), 'crate')
+    def post(self, request):
+        data = request.data
+        data.update({'author': str(request.user.id)})
+        post = PostCreateSerializer(data=data)
         if post.is_valid(raise_exception=True):
-            print(post, 'in if')
-            # post = request.user.id
+            post.author_id = request.user.id
             saved_post = post.save()
-            print(saved_post, 'save')
             return Response({"success": f"Article '{saved_post.title}' created successfully"}, status=201)
         else:
             return Response(status=404)
@@ -63,7 +61,8 @@ class PostUpdateView(APIView):
 
 
 class PostDeleteView(APIView):
-    """Update single post for authenticated users"""
+    """Deleting single post for authenticated users"""
+
     authentication_classes = (BasicAuthentication,)
     permission_classes = (IsAuthenticated,)
 

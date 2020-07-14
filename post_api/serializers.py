@@ -29,6 +29,8 @@ class PostCreateSerializer(serializers.ModelSerializer):
         fields = ('title', 'content', 'author')
 
 
+
+
 class PostUpdateSerializer(serializers.ModelSerializer):
     """Create post"""
 

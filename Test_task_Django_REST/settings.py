@@ -128,5 +128,5 @@ STATIC_URL = '/static/'
 # Permissions for Rest_framework
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ]}
