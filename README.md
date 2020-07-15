@@ -25,6 +25,10 @@ That will create a new folder `env` in your project directory. Next activate it 
 ```
 source env/bin/active
 ```
+ or 
+ ```
+ env\Scripts\activate
+```
 
 Then install the project dependencies with
 

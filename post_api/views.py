@@ -1,17 +1,18 @@
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, get_object_or_404
 
 from .models import Post
 from .serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer
+from .services import add_like, remove_like
 
 
 class PostView(ListAPIView):
     """Output list of posts"""
 
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -19,12 +20,33 @@ class PostView(ListAPIView):
 class PostDetailView(APIView):
     """Output details of single post for all users"""
 
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         serializer = PostDetailSerializer(post)
         return Response(serializer.data)
+
+
+class PostAddLikeView(APIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, slug):
+        post = Post.objects.get(slug=slug)
+        user = request.user
+        add_like(post, user)
+        return Response({"success": f"Post '{post.title}' added like from {user.username}"}, status=201)
+
+
+class PostRemoveLikeView(APIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, slug):
+        post = Post.objects.get(slug=slug)
+        user = request.user
+        remove_like(post, user)
+        return Response({"success": f"From Post '{post.title}' removed like from {user.username}"}, status=201)
+
 
 
 class PostCreateView(APIView):

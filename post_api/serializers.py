@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Post
+from .services import is_fan
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -8,7 +9,13 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('slug', 'title', 'date_posted', 'like')
+        fields = ('slug', 'title', 'date_posted', 'total_likes')
+
+    def get_is_fan(self, obj) -> bool:
+        """Проверяет, лайкнул ли `request.user` твит (`obj`).
+        """
+        user = self.context.get('request').user
+        return is_fan(obj, user)
 
 
 class PostDetailSerializer(serializers.ModelSerializer):
@@ -18,7 +25,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ('id', 'slug', 'title', 'content', 'date_posted', 'author', 'total_likes')
 
 
 class PostCreateSerializer(serializers.ModelSerializer):

@@ -6,6 +6,19 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 
+from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
+
+class Like(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name='likes',
+                             on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+
+
 class Post(models.Model):
     """Model for posts at site"""
 
@@ -14,7 +27,7 @@ class Post(models.Model):
     content = models.TextField(blank=True)
     date_posted = models.DateField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    like = models.IntegerField(blank=True, default=0)
+    likes = GenericRelation(Like)
 
     class Meta:
         ordering = ['-date_posted']
@@ -33,3 +46,9 @@ class Post(models.Model):
         if not self.id:
             self.slug = self.generate_slug(self.title)
         super().save(*args, **kwargs)
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
+
+
