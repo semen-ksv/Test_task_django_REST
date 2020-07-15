@@ -5,36 +5,38 @@ from .models import Like
 User = get_user_model()
 
 
-def add_like(obj, user):
-    """Лайкает `obj`.
-    """
-    obj_type = ContentType.objects.get_for_model(obj)
+def add_like(post, user):
+    """Make like for post"""
+
+    obj_type = ContentType.objects.get_for_model(post)
     like, is_created = Like.objects.get_or_create(
-        content_type=obj_type, object_id=obj.id, user=user)
+        content_type=obj_type, object_id=post.id, user=user)
     return like
 
 
-def remove_like(obj, user):
-    """Удаляет лайк с `obj`.
-    """
-    obj_type = ContentType.objects.get_for_model(obj)
+def remove_like(post, user):
+    """Remove like from post"""
+
+    obj_type = ContentType.objects.get_for_model(post)
     Like.objects.filter(
-        content_type=obj_type, object_id=obj.id, user=user
+        content_type=obj_type, object_id=post.id, user=user
     ).delete()
 
 
-def is_fan(obj, user) -> bool:
-    """Проверяет, лайкнул ли `user` `obj`.
-    """
+def is_fan(post, user) -> bool:
+    """Check did `user` liked `post"""
+
     if not user.is_authenticated:
         return False
-    obj_type = ContentType.objects.get_for_model(obj)
+    obj_type = ContentType.objects.get_for_model(post)
     likes = Like.objects.filter(
-        content_type=obj_type, object_id=obj.id, user=user)
+        content_type=obj_type, object_id=post.id, user=user)
     return likes.exists()
 
 
-def count_likes(all_likes, slug1, slug2):
+def count_likes(all_likes, slug1, slug2) -> dict:
+    """Count likes according provided days"""
+
     response = {}
     for like in all_likes:
         date_of_like = str(like.date_like)
@@ -43,6 +45,7 @@ def count_likes(all_likes, slug1, slug2):
         else:
             response.update({date_of_like: 1})
 
-    all_likes = len(all_likes)
+    all_likes = len(all_likes)  # show all number of likes for asked period
+
     return {f'all likes at {slug1} to {slug2}': all_likes,
             "daily likes": response}

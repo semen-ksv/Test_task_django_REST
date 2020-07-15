@@ -111,7 +111,7 @@ class PostDeleteView(APIView):
 
 
 class LikeAnalyticsView(ListAPIView):
-    """Output list of likes"""
+    """Output list of all likes"""
 
     permission_classes = (IsAuthenticated,)
     queryset = Like.objects.all()
@@ -119,7 +119,7 @@ class LikeAnalyticsView(ListAPIView):
 
 
 class DayLikeAnalyticsView(APIView):
-    """Output list of likes"""
+    """Output likes related with one day"""
 
     permission_classes = (IsAuthenticated,)
 
@@ -132,7 +132,7 @@ class DayLikeAnalyticsView(APIView):
 
 
 class RangeDaysLikeAnalyticsView(APIView):
-    """Output list of likes"""
+    """Output likes related with range of days what get from url slug"""
 
     permission_classes = (IsAuthenticated,)
 

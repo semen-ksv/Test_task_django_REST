@@ -4,23 +4,20 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.text import slugify
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 
 class Like(models.Model):
+    """Model of like what user leave for post"""
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name='likes',
                              on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    date_like = models.DateField(default=timezone.now())
-
-    def count_like(self, date):
-        pass
-
-
+    date_liked = models.DateField(default=timezone.now())
 
 
 class Post(models.Model):

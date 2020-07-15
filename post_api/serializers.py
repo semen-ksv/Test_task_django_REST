@@ -45,7 +45,7 @@ class PostUpdateSerializer(serializers.ModelSerializer):
 
 
 class LikeAnalyticsSerializer(serializers.ModelSerializer):
-    """List of Likes"""
+    """List of all Likes"""
 
     user = serializers.SlugRelatedField(slug_field='username', read_only=True)
 
