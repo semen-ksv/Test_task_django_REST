@@ -4,6 +4,7 @@ from .models import Like
 
 User = get_user_model()
 
+
 def add_like(obj, user):
     """Лайкает `obj`.
     """
@@ -12,6 +13,7 @@ def add_like(obj, user):
         content_type=obj_type, object_id=obj.id, user=user)
     return like
 
+
 def remove_like(obj, user):
     """Удаляет лайк с `obj`.
     """
@@ -19,6 +21,7 @@ def remove_like(obj, user):
     Like.objects.filter(
         content_type=obj_type, object_id=obj.id, user=user
     ).delete()
+
 
 def is_fan(obj, user) -> bool:
     """Проверяет, лайкнул ли `user` `obj`.
@@ -30,3 +33,16 @@ def is_fan(obj, user) -> bool:
         content_type=obj_type, object_id=obj.id, user=user)
     return likes.exists()
 
+
+def count_likes(all_likes, slug1, slug2):
+    response = {}
+    for like in all_likes:
+        date_of_like = str(like.date_like)
+        if date_of_like in response:
+            response[date_of_like] += 1
+        else:
+            response.update({date_of_like: 1})
+
+    all_likes = len(all_likes)
+    return {f'all likes at {slug1} to {slug2}': all_likes,
+            "daily likes": response}

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Post
+from .models import Post, Like
 from .services import is_fan
 
 
@@ -36,16 +36,22 @@ class PostCreateSerializer(serializers.ModelSerializer):
         fields = ('title', 'content', 'author')
 
 
-
-
 class PostUpdateSerializer(serializers.ModelSerializer):
-    """Create post"""
+    """Update post"""
 
     class Meta:
         model = Post
         fields = ('title', 'content')
 
 
+class LikeAnalyticsSerializer(serializers.ModelSerializer):
+    """List of Likes"""
+
+    user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+
+    class Meta:
+        model = Like
+        fields = '__all__'
 
 # {
 # "title": "Third post from API",

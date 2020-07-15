@@ -5,12 +5,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, get_object_or_404
 
-from .models import Post
-from .serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer
-from .services import add_like, remove_like
-
+from .models import Post, Like
+from .serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, \
+    PostUpdateSerializer, LikeAnalyticsSerializer
+from .services import add_like, remove_like, count_likes
 
 User = get_user_model()
+
 
 class PostView(ListAPIView):
     """Output list of posts"""
@@ -78,7 +79,7 @@ class PostCreateView(APIView):
 class PostUpdateView(APIView):
     """Update single post for authenticated users"""
     authentication_classes = (BasicAuthentication,)
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def put(self, request, slug):
         # Get post with this slug
@@ -107,3 +108,35 @@ class PostDeleteView(APIView):
         return Response({
             "message": f"Article with id `{article.title}` has been deleted."
         }, status=204)
+
+
+class LikeAnalyticsView(ListAPIView):
+    """Output list of likes"""
+
+    permission_classes = (IsAuthenticated,)
+    queryset = Like.objects.all()
+    serializer_class = LikeAnalyticsSerializer
+
+
+class DayLikeAnalyticsView(APIView):
+    """Output list of likes"""
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, slug):
+        all_like = Like.objects.filter(date_like=slug)
+        daily_like = len(all_like)
+        return Response({"daily likes": {
+            slug: daily_like}},
+            status=201)
+
+
+class RangeDaysLikeAnalyticsView(APIView):
+    """Output list of likes"""
+
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, slug1, slug2):
+        all_likes = Like.objects.filter(date_like__gte=slug1, date_like__lte=slug2)
+        response = count_likes(all_likes, slug1, slug2)
+        return Response(response, status=201)

@@ -1,15 +1,13 @@
 from time import time
 
 from django.contrib.auth.models import User
-from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
-
-
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+
 
 class Like(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -17,6 +15,12 @@ class Like(models.Model):
                              on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
+    date_like = models.DateField(default=timezone.now())
+
+    def count_like(self, date):
+        pass
+
+
 
 
 class Post(models.Model):
