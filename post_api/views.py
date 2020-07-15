@@ -60,7 +60,7 @@ class PostRemoveLikeView(APIView):
 
 class PostCreateView(APIView):
     """Add single post for authenticated users"""
-    authentication_classes = (BasicAuthentication,)
+    # authentication_classes = (BasicAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
