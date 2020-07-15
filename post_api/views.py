@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -8,6 +9,8 @@ from .models import Post
 from .serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, PostUpdateSerializer
 from .services import add_like, remove_like
 
+
+User = get_user_model()
 
 class PostView(ListAPIView):
     """Output list of posts"""
@@ -34,8 +37,11 @@ class PostAddLikeView(APIView):
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         user = request.user
-        add_like(post, user)
-        return Response({"success": f"Post '{post.title}' added like from {user.username}"}, status=201)
+        if user.is_authenticated:
+            add_like(post, user)
+            return Response({"success": f"Post '{post.title}' added like from {user.username}"}, status=201)
+        else:
+            return Response({"success": f"Please login fo like the post"}, status=401)
 
 
 class PostRemoveLikeView(APIView):
@@ -44,9 +50,11 @@ class PostRemoveLikeView(APIView):
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         user = request.user
-        remove_like(post, user)
-        return Response({"success": f"From Post '{post.title}' removed like from {user.username}"}, status=201)
-
+        if user.is_authenticated:
+            remove_like(post, user.id)
+            return Response({"success": f"From  '{post.title}' removed like by {user.username}"}, status=201)
+        else:
+            return Response({"success": f"Please login fo unlike the post"}, status=401)
 
 
 class PostCreateView(APIView):
