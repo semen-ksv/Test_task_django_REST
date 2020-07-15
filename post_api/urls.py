@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import PostView, PostDetailView, PostCreateView, PostUpdateView,\
-    PostDeleteView, PostAddLikeView, PostRemoveLikeView, LikeAnalyticsView, DayLikeAnalyticsView, RangeDaysLikeAnalyticsView
+from .views import PostView, PostDetailView, PostCreateView,\
+    PostUpdateView,PostDeleteView, PostAddLikeView, PostRemoveLikeView,\
+    LikeAnalyticsView, DayLikeAnalyticsView, RangeDaysLikeAnalyticsView
 
 urlpatterns = [
     path('', PostView.as_view()),

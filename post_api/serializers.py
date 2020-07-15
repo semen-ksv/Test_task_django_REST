@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Post, Like
+from .models import Post, Like, SimpleUser
 from .services import is_fan
 
 
@@ -53,8 +53,10 @@ class LikeAnalyticsSerializer(serializers.ModelSerializer):
         model = Like
         fields = '__all__'
 
-# {
-# "title": "Third post from API",
-# "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, quam sed viverra hendrerit, massa urna varius est, rutrum tempor ante justo et neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus nec sagittis justo, vel tincidunt sem. Etiam tincidunt bibendum molestie.",
-# "author": "1"
-# }
+
+class SimpleUserSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = SimpleUser
+        fields = '__all__'

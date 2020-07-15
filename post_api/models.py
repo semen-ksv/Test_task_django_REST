@@ -20,6 +20,20 @@ class Like(models.Model):
     date_liked = models.DateField(default=timezone.now())
 
 
+class SimpleUser(models.Model):
+    """Model of User with additional fields"""
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    biography = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=30, blank=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+    last_login = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+
 class Post(models.Model):
     """Model for posts at site"""
 
