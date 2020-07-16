@@ -3,10 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .yasg import urlpatterns as swagger_urls
 from post_api.views import SimpleUserListView
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

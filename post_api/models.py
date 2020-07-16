@@ -3,7 +3,6 @@ from time import time
 from django.contrib.auth.models import User, AbstractUser
 from django.utils import timezone
 from django.utils.text import slugify
-from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models

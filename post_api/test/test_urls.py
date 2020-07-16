@@ -1,9 +1,9 @@
-from django.test import SimpleTestCase
+from rest_framework.test import APISimpleTestCase
 from django.urls import reverse, resolve
 from post_api.views import *
 
 
-class TestUrls(SimpleTestCase):
+class TestUrls(APISimpleTestCase):
     """test all urls from post_api"""
 
     def test_all_post_url(self):

@@ -132,8 +132,8 @@ STATIC_URL = '/static/'
 # Permissions for Rest_framework
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticated',
-        'rest_framework_simplejwt.authentication.JWTTokenUserAuthentication',
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework_simplejwt.authentication.JWTTokenUserAuthentication',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
