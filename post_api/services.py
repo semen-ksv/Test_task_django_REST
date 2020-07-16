@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
-from .models import Like
+
+from django.utils.timezone import now
+
+from .models import Like, SimpleUser
 
 User = get_user_model()
 
@@ -49,3 +52,14 @@ def count_likes(all_likes, slug1, slug2) -> dict:
 
     return {f'all likes at {slug1} to {slug2}': all_likes,
             "daily likes": response}
+
+
+def user_request_middleware(get_response):
+    # Update last visit time after request finished processing.
+    def process_response(request):
+        response = get_response(request)
+        if request.user.is_authenticated:
+            # Update last visit time after request finished processing.
+            SimpleUser.objects.filter(pk=request.user.pk).update(last_request=now())
+        return response
+    return process_response

@@ -4,14 +4,12 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, get_object_or_404
+from rest_framework.generics import ListAPIView, get_object_or_404, CreateAPIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Post, Like, SimpleUser
 from .serializers import PostSerializer, PostDetailSerializer, PostCreateSerializer, \
     PostUpdateSerializer, LikeAnalyticsSerializer, SimpleUserSerializer
 from .services import add_like, remove_like, count_likes
-
-User = get_user_model()
 
 
 class PostView(ListAPIView):
@@ -111,14 +109,6 @@ class PostDeleteView(APIView):
         }, status=204)
 
 
-class LikeAnalyticsView(ListAPIView):
-    """Output list of all likes"""
-
-    permission_classes = (IsAuthenticated,)
-    queryset = Like.objects.all()
-    serializer_class = LikeAnalyticsSerializer
-
-
 class DayLikeAnalyticsView(APIView):
     """Output likes related with one day"""
 
@@ -138,25 +128,27 @@ class RangeDaysLikeAnalyticsView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, slug1, slug2):
-        print(User.objects.get(username='admin').last_login)
         all_likes = Like.objects.filter(date_like__gte=slug1, date_like__lte=slug2)
         response = count_likes(all_likes, slug1, slug2)
         return Response(response, status=201)
 
 
-class SimpleUserListCreateView(ListCreateAPIView):
+class SimpleUserListView(ListAPIView):
     queryset = SimpleUser.objects.all()
     serializer_class = SimpleUserSerializer
     # permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
 
 
-class SimpleUserDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = SimpleUser.objects.all()
-    serializer_class = SimpleUserSerializer
-    # permission_classes = [IsAuthenticated]
+# from rest_framework_jwt.views import ObtainJSONWebToken
+#
+# from .serializers import JWTSerializer
+# # Create your views here.
+# class ObtainJWTView(ObtainJSONWebToken):
+#     serializer_class = JWTSerializer
+
+
+
+
 
 

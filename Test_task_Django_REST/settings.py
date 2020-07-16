@@ -1,5 +1,6 @@
 import os
 from datetime import timedelta
+# from post_api
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.conf import settings
@@ -19,6 +20,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INTERNAL_IPS = ['127.0.0.1', ]
+
+AUTH_USER_MODEL = 'post_api.SimpleUser'
 
 # Application definition
 
@@ -46,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'post_api.services.user_request_middleware',
 ]
 
 ROOT_URLCONF = 'Test_task_Django_REST.urls'
@@ -121,15 +125,15 @@ STATIC_URL = '/static/'
 
 # Permissions for Rest_framework
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'PAGE_SIZE': 10,
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    # 'PAGE_SIZE': 10,
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 DJOSER = {
