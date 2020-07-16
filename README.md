@@ -1,12 +1,12 @@
 ## Test task: Python Developer 
 #### Simple REST API with Django Rest Framework
- #####Implement:
+ ####Implement:
   - used Django Rest Framework
   - JWT token authentication
   - swagger documentations
   - testing models, auth, views, urls
   
-#####Models:
+####Models:
 1. SimpleUser inheritance AbstractUser
 2. Post
 3. Like
@@ -24,7 +24,8 @@
 6. like analytics for range of days ```api/post/date-from_<YYYY-MM-DD>-date-to_<YYYY-MM-DD>/```
 7. user activity show when user was login last time and when he made a last request ```user/```
 
-
+![](img/swage_img.jpg)
+![](img/test_img.jpg)
 
 ### Running project
 
@@ -54,6 +55,12 @@ Then install the project dependencies with
 
 ```
 pip install -r requirements.txt
+```
+
+Migrate for creating all tables 
+
+```
+python manage.py migrate
 ```
 
 Now you can run the project with this command
