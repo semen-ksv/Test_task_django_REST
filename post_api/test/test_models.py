@@ -22,10 +22,16 @@ class TestModels(APITestCase):
         record_post = Post.objects.get(slug=self.post.slug)
         self.assertEqual(record_post, self.post)
 
+        record2_post = Post.objects.get(id=self.post.id)
+        self.assertEqual(record2_post, self.post)
+
+        record3_post = Post.objects.get(title=self.post.title)
+        self.assertEqual(record3_post, self.post)
+
     def test_generate_slug(self):
         self.assertEqual(Post.generate_slug('Test post'), f'test-post_{str(int(time()))}')
 
-    def test_comment_fields(self):
+    def test_likes_fields(self):
         content = ContentType.objects.get(
             app_label='post_api',
             model='post'
