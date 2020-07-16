@@ -4,8 +4,8 @@ from .views import PostView, PostDetailView, PostCreateView,\
     DayLikeAnalyticsView, RangeDaysLikeAnalyticsView
 
 urlpatterns = [
-    path('', PostView.as_view()),
-    path('create/', PostCreateView.as_view()),
+    path('', PostView.as_view(), name='all-post'),
+    path('create/', PostCreateView.as_view(), name="post-create"),
     path('analytics/date_<slug>/', DayLikeAnalyticsView.as_view()),
     path('analytics/date-from_<slug1>-date-to_<slug2>/', RangeDaysLikeAnalyticsView.as_view()),
     path('<str:slug>/', PostDetailView.as_view()),

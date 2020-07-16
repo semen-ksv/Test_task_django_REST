@@ -35,6 +35,9 @@ class PostDetailView(APIView):
 
 
 class PostAddLikeView(APIView):
+    """Add like for post using slug of post"""
+
+    authentication_classes = (BasicAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, slug):
@@ -48,6 +51,9 @@ class PostAddLikeView(APIView):
 
 
 class PostRemoveLikeView(APIView):
+    """Delete like from post using slug of post"""
+
+    authentication_classes = (BasicAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, slug):
@@ -62,6 +68,7 @@ class PostRemoveLikeView(APIView):
 
 class PostCreateView(APIView):
     """Add single post for authenticated users"""
+
     authentication_classes = (BasicAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -80,6 +87,7 @@ class PostCreateView(APIView):
 
 class PostUpdateView(APIView):
     """Update single post for authenticated users"""
+
     authentication_classes = (BasicAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -113,12 +121,12 @@ class PostDeleteView(APIView):
 
 
 class DayLikeAnalyticsView(APIView):
-    """Output likes related with one day"""
+    """Output likes related with one day using rout 'date_YYYY-MM-DD'"""
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, slug):
-        all_like = Like.objects.filter(date_like=slug)
+        all_like = Like.objects.filter(date_liked=slug)
         daily_like = len(all_like)
         return Response({"daily likes": {
             slug: daily_like}},
@@ -126,29 +134,27 @@ class DayLikeAnalyticsView(APIView):
 
 
 class RangeDaysLikeAnalyticsView(APIView):
-    """Output likes related with range of days what get from url slug"""
+    """
+    Output likes related with range of days what get from url slug using rout 'date-from_YYYY-MM-DD-date-to_YYYY-MM-DD'
+    """
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, slug1, slug2):
-        all_likes = Like.objects.filter(date_like__gte=slug1, date_like__lte=slug2)
+        all_likes = Like.objects.filter(date_liked__gte=slug1, date_liked__lte=slug2)
         response = count_likes(all_likes, slug1, slug2)
         return Response(response, status=201)
 
 
 class SimpleUserListView(ListAPIView):
+    """Show information about users id, username, last_login, last_request"""
+
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
     queryset = SimpleUser.objects.all()
     serializer_class = SimpleUserSerializer
-    # permission_classes = [IsAuthenticated]
 
 
-
-# from rest_framework_jwt.views import ObtainJSONWebToken
-#
-# from .serializers import JWTSerializer
-# # Create your views here.
-# class ObtainJWTView(ObtainJSONWebToken):
-#     serializer_class = JWTSerializer
 
 
 
