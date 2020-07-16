@@ -12,7 +12,7 @@ from django.db import models
 class SimpleUser(AbstractUser):
     """Model of User with additional fields"""
 
-    # birthday = models.DateTimeField(blank=True, null=True)
+    birthday = models.DateTimeField(blank=True, null=True)
     biography = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=30, blank=True)
 

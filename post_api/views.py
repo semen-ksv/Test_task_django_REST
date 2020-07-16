@@ -126,10 +126,9 @@ class DayLikeAnalyticsView(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, slug):
-        all_like = Like.objects.filter(date_liked=slug)
-        daily_like = len(all_like)
+        all_likes = Like.objects.filter(date_liked=slug).count()
         return Response({"daily likes": {
-            slug: daily_like}},
+            slug: all_likes}},
             status=201)
 
 

@@ -13,7 +13,9 @@ class GetAllPostsTest(TestCase):
     """ Test module for GET all posts API """
 
     def setUp(self):
-        new_user = user.objects.get(id=1)
+        print(user)
+        new_user = user.__class__.objects.get(username='Sem')
+        print(new_user)
         Post.objects.create(
             title='First title', content='Some Text', author=new_user)
     #     Post.objects.create(
