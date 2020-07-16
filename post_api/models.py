@@ -9,17 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 
-class Like(models.Model):
-    """Model of like what user leave for post"""
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             related_name='likes',
-                             on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    date_liked = models.DateField(default=timezone.now())
-
-
 class SimpleUser(AbstractUser):
     """Model of User with additional fields"""
 
@@ -33,6 +22,16 @@ class SimpleUser(AbstractUser):
     def __str__(self):
         return self.username
 
+
+class Like(models.Model):
+    """Model of like what user leave for post"""
+
+    user = models.ForeignKey(SimpleUser,
+                             related_name='likes',
+                             on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    date_liked = models.DateField(default=timezone.now())
 
 
 class Post(models.Model):

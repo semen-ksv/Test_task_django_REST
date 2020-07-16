@@ -27,6 +27,9 @@ class PostDetailView(APIView):
 
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
+        user = SimpleUser.username
+        print(post, post.id, post.pk, post.title, post.author, post.author_id)
+        print(user)
         serializer = PostDetailSerializer(post)
         return Response(serializer.data)
 

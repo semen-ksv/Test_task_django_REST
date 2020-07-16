@@ -10,6 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('slug', 'title', 'date_posted', 'total_likes')
+        read_only_fields = fields
 
     def get_is_fan(self, obj) -> bool:
         """Проверяет, лайкнул ли `request.user` твит (`obj`).
@@ -26,6 +27,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'slug', 'title', 'content', 'date_posted', 'author', 'total_likes')
+        read_only_fields = fields
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
@@ -52,6 +54,7 @@ class LikeAnalyticsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = '__all__'
+        read_only_fields = fields
 
 
 class SimpleUserSerializer(serializers.ModelSerializer):
@@ -60,6 +63,7 @@ class SimpleUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = SimpleUser
         fields = ('id', 'username', 'last_login', 'last_request')
+        read_only_fields = fields
 
 
 
