@@ -9,6 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 client = APIClient()
 user = SimpleUser()
 
+
 class GetAllPostsTest(APITestCase):
     """Test module for GET all posts API"""
 
@@ -120,7 +121,6 @@ class UpdateSinglePostTest(APITestCase):
         # get token
         refresh = RefreshToken.for_user(self.user)
         client.credentials(HTTP_AUTHORIZATION=f'Bearer {refresh.access_token}')
-
 
     def test_post_update(self):
         response = client.put(

@@ -22,7 +22,7 @@ def remove_like(post, user):
     ).delete()
 
 
-def is_fan(post, user) -> bool:
+def check_was_post_liked(post, user) -> bool:
     """Check did `user` liked `post"""
 
     if not user.is_authenticated:

@@ -7,6 +7,7 @@ from post_api.models import SimpleUser
 
 
 class AuthViewsTests(APITestCase):
+    """Test for creation user and gating token"""
 
     def setUp(self):
         self.username = 'sem'

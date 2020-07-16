@@ -4,7 +4,7 @@ from time import time
 from post_api.models import Post, SimpleUser, Like
 
 
-class TestModels(APITestCase):
+class TestPostModel(APITestCase):
     """Post model testing fields, slug generations"""
 
     def setUp(self) -> None:
