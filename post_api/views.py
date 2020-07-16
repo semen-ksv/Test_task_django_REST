@@ -1,6 +1,6 @@
-from rest_framework.authentication import BasicAuthentication, TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework_simplejwt.authentication import JWTAuthentication, JWTTokenUserAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, get_object_or_404
@@ -33,7 +33,7 @@ class PostDetailView(APIView):
 class PostCreateView(APIView):
     """Add single post for authenticated users"""
 
-    authentication_classes = (JWTAuthentication,)
+    # authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
@@ -52,7 +52,7 @@ class PostCreateView(APIView):
 class PostUpdateView(APIView):
     """Update single post for authenticated users"""
 
-    authentication_classes = (JWTAuthentication,)
+    # authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def put(self, request, slug):
@@ -87,7 +87,7 @@ class PostDeleteView(APIView):
 class PostAddLikeView(APIView):
     """Add like for post using slug of post"""
 
-    authentication_classes = (JWTAuthentication,)
+    # authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, slug):
@@ -144,8 +144,7 @@ class RangeDaysLikeAnalyticsView(APIView):
 class SimpleUserListView(ListAPIView):
     """Show information about users id, username, last_login, last_request"""
 
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     queryset = SimpleUser.objects.all()
     serializer_class = SimpleUserSerializer
