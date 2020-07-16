@@ -26,10 +26,7 @@ class PostDetailView(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, slug):
-        post = Post.objects.get(slug=slug)
-        user = SimpleUser.username
-        print(post, post.id, post.pk, post.title, post.author, post.author_id)
-        print(user)
+        post = get_object_or_404(Post, slug=slug)
         serializer = PostDetailSerializer(post)
         return Response(serializer.data)
 

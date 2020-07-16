@@ -1,9 +1,9 @@
-import json
 from rest_framework import status
 from django.test import TestCase, Client
 from django.urls import reverse
 from ..models import Post, SimpleUser
-from ..serializers import PostSerializer
+from ..serializers import PostSerializer, PostDetailSerializer
+
 
 client = Client()
 user = SimpleUser()
@@ -13,15 +13,13 @@ class GetAllPostsTest(TestCase):
     """ Test module for GET all posts API """
 
     def setUp(self):
-        print(user)
-        new_user = user.__class__.objects.get(username='Sem')
-        print(new_user)
-        Post.objects.create(
-            title='First title', content='Some Text', author=new_user)
-    #     Post.objects.create(
-    #         title='Second title', content='Some Text', author_id=1)
-    #     Post.objects.create(
-    #         title='Third title', content='Some Text', author_id=1)
+
+        self.new_user = SimpleUser.objects.create(username='Sem')
+        self.post = Post()
+        self.post.title = 'Test post'
+        self.post.content = 'Content from post'
+        self.post.author = self.new_user
+        self.post.save()
 
     def test_get_all_post(self):
         # get API response
@@ -32,25 +30,27 @@ class GetAllPostsTest(TestCase):
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-# class GetSinglePuppyTest(TestCase):
-#     """ Test module for GET single puppy API """
-#     def setUp(self):
-#         self.first_post = Post.objects.create(
-#             title='First title', content='Some Text', author_id=1)
-#         self.second_post = Post.objects.create(
-#             title='Second title', content='Some Text', author_id=1)
-#         self.third_post = Post.objects.create(
-#             title='Third title', content='Some Text', author_id=1)
-#
-#     def test_get_single_post(self):
-#         response = client.get(
-#             reverse('PostDetailView', kwargs={'slug': self.first_post.slug}))
-#         puppy = Post.objects.get(slug=self.first_post.slug)
-#         serializer = PostSerializer(puppy)
-#         self.assertEqual(response.data, serializer.data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#
-#     def test_get_invalid_single_post(self):
-#         response = client.get(
-#             reverse('PostDetailView', kwargs={'slug': self.ten_post.slug}))
-#         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+class GetSinglePostTest(TestCase):
+    """ Test module for GET single post API """
+
+    def setUp(self):
+        self.new_user = SimpleUser.objects.create(username='Sem')
+        self.post = Post()
+        self.post.title = 'Test post'
+        self.post.content = 'Content from post'
+        self.post.author = self.new_user
+        self.post.save()
+
+    def test_get_single_post(self):
+        response = client.get(reverse('post-detail', kwargs={'slug': self.post.slug}))
+        post = Post.objects.get(slug=self.post.slug)
+        serializer = PostDetailSerializer(post)
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_invalid_single_post(self):
+        # get wrong slug
+        response = client.get(
+            reverse('post-detail', kwargs={'slug': self.post.slug + "1"}))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+

@@ -31,7 +31,7 @@ class Like(models.Model):
                              on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    date_liked = models.DateField(default=timezone.now())
+    date_liked = models.DateField(default=timezone.now)
 
 
 class Post(models.Model):
