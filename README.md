@@ -1,16 +1,12 @@
-## Test task: Python Developer 
-#### Simple REST API with Django Rest Framework
- ####Implement:
-  - used Django Rest Framework
-  - JWT token authentication
-  - swagger documentations
-  - testing models, auth, views, urls
-  
-####Models:
-1. SimpleUser inheritance AbstractUser
-2. Post
-3. Like
+## Test task: Simple REST API with Django Rest Framework
 
+#### Implement:
+  1. used Django Rest Framework
+  2. models: SimpleUser inheritance AbstractUser, Post, Like
+  2. JWT token authentication
+  3. swagger documentations
+  4. testing models, auth, views, urls
+  
 #### Urls:
 1. user signup ```/auth/users/```
 2. user login (get JWT token) ```/api/token/```
