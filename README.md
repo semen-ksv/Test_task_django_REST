@@ -16,8 +16,8 @@
 6. post deleting ```api/post/<post_slug>/delete/```
 7. post like ```api/post/<post_slug>/like/```
 8. post unlike ```api/post/<post_slug>/unlike/```
-9. analytics about how many likes was made for one day ```api/post/date_<YYYY-MM-DD>/```
-10. like analytics for range of days ```api/post/date-from_<YYYY-MM-DD>-date-to_<YYYY-MM-DD>/```
+9. analytics about how many likes was made for one day ```api/post/date_YYYY-MM-DD/```
+10. like analytics for range of days ```api/post/date-from_YYYY-MM-DD-date-to_YYYY-MM-DD/```
 ```
 {
     "all likes at 2020-07-16 to 2020-07-17": 5,
