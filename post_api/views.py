@@ -87,7 +87,7 @@ class PostAddLikeView(APIView):
     """Add like for post using slug of post"""
 
     # authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)

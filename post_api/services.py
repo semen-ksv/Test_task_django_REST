@@ -38,7 +38,7 @@ def count_likes(all_likes, slug1, slug2) -> dict:
 
     response = {}
     for like in all_likes:
-        date_of_like = str(like.date_like)
+        date_of_like = str(like.date_liked)
         if date_of_like in response:
             response[date_of_like] += 1
         else:

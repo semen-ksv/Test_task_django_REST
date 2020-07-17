@@ -11,14 +11,31 @@
 1. user signup ```/auth/users/```
 2. user login (get JWT token) ```/api/token/```
 3. show all posts ```api/post/```
-3. post creation ```api/post/create/```
-3. post updating ```api/post/<post_slug>/update/```
-3. post deleting ```api/post/<post_slug>/delete/```
-4. post like ```api/post/<post_slug>/like/```
-5. post unlike ```api/post/<post_slug>/unlike/```
-6. analytics about how many likes was made for one day ```api/post/date_<YYYY-MM-DD>/```
-6. like analytics for range of days ```api/post/date-from_<YYYY-MM-DD>-date-to_<YYYY-MM-DD>/```
-7. user activity show when user was login last time and when he made a last request ```user/```
+4. post creation ```api/post/create/```
+5. post updating ```api/post/<post_slug>/update/```
+6. post deleting ```api/post/<post_slug>/delete/```
+7. post like ```api/post/<post_slug>/like/```
+8. post unlike ```api/post/<post_slug>/unlike/```
+9. analytics about how many likes was made for one day ```api/post/date_<YYYY-MM-DD>/```
+10. like analytics for range of days ```api/post/date-from_<YYYY-MM-DD>-date-to_<YYYY-MM-DD>/```
+```
+{
+    "all likes at 2020-07-16 to 2020-07-17": 5,
+    "daily likes": {
+        "2020-07-16": 2,
+        "2020-07-17": 3
+    }
+}
+```
+11 user activity show when user was login last time and when he made a last request ```user/```
+```
+{
+    "id": 2,
+    "username": "sem",
+    "last_login": "2020-07-16T22:01:52.763687Z",
+    "last_request": "2020-07-16T22:03:18.935197Z"
+}
+```
 
 ![](img/swage_img.jpg)
 ![](img/test_img.jpg)
