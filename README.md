@@ -8,8 +8,8 @@
   4. testing models, auth, views, urls
   
 #### Urls:
-1. user signup ```/auth/users/```
-2. user login (get JWT token) ```/api/token/```
+1. user signup ```auth/users/```
+2. user login (get JWT token) ```api/token/```
 3. show all posts ```api/post/```
 4. post creation ```api/post/create/```
 5. post updating ```api/post/<post_slug>/update/```
@@ -27,7 +27,7 @@
     }
 }
 ```
-11 user activity show when user was login last time and when he made a last request ```user/```
+11\. user activity show when user was login last time and when he made a last request ```user/```
 ```
 {
     "id": 2,
@@ -36,8 +36,10 @@
     "last_request": "2020-07-16T22:03:18.935197Z"
 }
 ```
-
+12\. Swagger page ```swagger/```
 ![](img/swage_img.jpg)
+
+Passed tests
 ![](img/test_img.jpg)
 
 ### Running project
